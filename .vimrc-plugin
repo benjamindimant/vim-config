@@ -3,7 +3,6 @@ colorscheme default
 syntax on
 set encoding=UTF-8
 set laststatus=2
-
 " UI config
 set number
 set showmatch
@@ -95,15 +94,6 @@ inoremap ()     ()
 " Get rid of delay on ^[O
 set timeout timeoutlen=5000 ttimeoutlen=100
 
-" Theme and Styling
-set t_Co=256
-set background=dark
-
-if (has("termguicolors"))
-  set termguicolors
-endif
-
-let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme darcula
 
 let g:spacegray_underline_search = 1
