@@ -1,30 +1,3 @@
-" Colors
-colorscheme default
-syntax on
-set encoding=UTF-8
-set laststatus=2
-" UI config
-set number
-set showmatch
-
-" Indentations
-set shiftwidth=2
-set autoindent
-set smartindent
-set expandtab
-set softtabstop=2
-" set textwidth=80
-
-set showmode
-set showcmd
-set wildmenu
-set ruler
-set nowrap
-set ignorecase
-set smartcase
-set incsearch
-set path==.,..,/usr/include/**,/usr/share/**
-
 """" START Vundle Configuration
 
 " Disable file type for vundle
@@ -44,70 +17,100 @@ Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'ap/vim-buftabline'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'Raimondi/delimitMate'
 
-" React Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'skywind3000/asyncrun.vim'
+" Colorscheme
+Plugin 'blueshirts/darcula'
+
+" Snippets
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+" SuperTab
+Plugin 'ervandew/supertab'
+
+" C/C++
+Plugin 'vim-scripts/a.vim'
 
 " Python
 Plugin 'vim-scripts/indentpython.vim'
 
 " Theme / Interface
 Plugin 'AnsiEsc.vim'
-Plugin 'ryanoasis/vim-devicons'
 Plugin 'itchyny/lightline.vim'
-Plugin 'sjl/badwolf'
-Plugin 'tomasr/molokai'
-Plugin 'morhetz/gruvbox'
-Plugin 'dracula/dracula-theme', {'rtp': 'vim/'}
-Plugin 'junegunn/limelight.vim'
-Plugin 'mkarmona/colorsbox'
-Plugin 'romainl/Apprentice'
-Plugin 'Lokaltog/vim-distinguished'
-Plugin 'chriskempson/base16-vim'
-Plugin 'w0ng/vim-hybrid'
-Plugin 'daylerees/colour-schemes'
-Plugin 'atelierbram/Base2Tone-vim'
-Plugin 'blueshirts/darcula'
-
-" OSX backspace fix
-set backspace=indent,eol,start
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 """" END Vundle Configuration
 
-" Brackets
+"""" BEGIN Vanilla
+" Colors
+colorscheme darcula
+syntax on
+set laststatus=2
+" UI config
+set number
+set showmatch
+set encoding=UTF-8
 
-" Autocomplete brackets
-inoremap {      {}<Left>
-inoremap {<CR>  {<CR>}<Esc>O
-inoremap {{     {
-inoremap {}     {}
+" Indentations
+set shiftwidth=2
+set autoindent
+set smartindent
+set expandtab
+set softtabstop=2
 
-" Autocomplete brackets
-inoremap (      ()<Left>
-inoremap (<CR>  (<CR>)<Esc>O
-inoremap ((     (
-inoremap ()     ()
+set showmode
+set showcmd
+set wildmenu
+set ruler
+set nowrap
+set ignorecase
+set smartcase
+set incsearch
+set path==.,..,/usr/include/**,/usr/share/**
 
 " Get rid of delay on ^[O
 set timeout timeoutlen=5000 ttimeoutlen=100
 
-colorscheme darcula
+" OSX backspace fix
+set backspace=indent,eol,start
 
-let g:spacegray_underline_search = 1
-let g:spacegray_italicize_comments = 1
+"""" END Vanilla
 
-" NerdTree
+"""" BEGIN Bindings
+" https://medium.com/@sidneyliebrand/a-collection-of-vim-key-binds-4d227c9a455
+" Disable arrow keys
+nmap <Up>    <Nop>
+nmap <Down>  <Nop>
+nmap <Left>  <Nop>
+nmap <Right> <Nop>
+inoremap <C-k> <Up>
+inoremap <C-j> <Down>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+
+" Tab and shift-Tab to indent
+nnoremap <Tab>   >>
+nnoremap <S-Tab> <<
+vnoremap <Tab>   >><Esc>gv
+vnoremap <S-Tab> <<<Esc>gv
+
+" Fix Y
+nnoremap Y y$
+"""" End Bindings
+
+"""" BEGIN NerdTree
 map <C-o> :NERDTreeToggle<CR>
+"""" END NerdTree
 
-" Lightline
+"""" BEGIN Lightline
 let g:lightline = {
     \ 'colorscheme': 'jellybeans',
     \ }
+"""" END Lightline
 
-" fzf
+"""" BEGIN fzf
 " Fzf Configuration
 " This is the default extra key bindings
 let g:fzf_action = {
@@ -140,22 +143,44 @@ let g:fzf_colors =
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-map ; :GFiles<CR>
+map ; :Files<CR>
+"""" END fzf
 
-" Buftabline
+"""" BEGIN delimitMate
+" https://stackoverflow.com/questions/4237817/configuring-vim-for-c
+au FileType mail let b:delimitMate_autoclose = 0
+let g:delimitMate_expand_cr = 1
+"""" END delimitMate
+
+"""" BEGIN buftabline
 nnoremap <C-N> :bnext<CR>
 nnoremap <C-P> :bprev<CR>
 nnoremap <C-X> :bd<CR>
+"""" END buftabline
 
-" Python
+"""" BEGIN UltiSnips
+" Make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" Better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+" If you want :UltiSnipsEdit to split your window
+let g:UltiSnipsEditSplit="vertical"
+"""" END UltiSnips
+
+"""" BEGIN python
 au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=80 expandtab autoindent fileformat=unix
 autocmd FileType python noremap <buffer> <A-CR> :call Autopep8()<CR>
 let python_highlight_all=1
 runtime ftplugin/vim-autopep8.vim
+"""" END python
 
-" React
-if filereadable("./node_modules/.bin/eslint")
-  au BufWritePost *.jsx AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
-endif
+"""" BEGIN ale
 let g:ale_sign_warning = '.'
 let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+"""" END ale
