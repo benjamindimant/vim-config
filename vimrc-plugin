@@ -35,6 +35,9 @@ Plugin 'vim-scripts/a.vim'
 " Python
 Plugin 'vim-scripts/indentpython.vim'
 
+" Markdown
+Plugin 'shime/vim-livedown'
+
 " Theme / Interface
 Plugin 'AnsiEsc.vim'
 Plugin 'itchyny/lightline.vim'
@@ -184,3 +187,7 @@ runtime ftplugin/vim-autopep8.vim
 let g:ale_sign_warning = '.'
 let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 """" END ale
+
+"""" Markdown
+au BufReadPost,BufNewFile *.md LivedownPreview
+""""
