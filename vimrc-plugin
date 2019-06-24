@@ -37,6 +37,8 @@ Plugin 'vim-scripts/indentpython.vim'
 
 " Markdown
 Plugin 'shime/vim-livedown'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 " Theme / Interface
 Plugin 'AnsiEsc.vim'
@@ -190,4 +192,12 @@ let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
 """" Markdown
 au BufReadPost,BufNewFile *.md LivedownPreview
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_new_list_item_indent = 2
+""""
+
+"""" C++
+au BufWritePost *.cpp :py3f /usr/local/opt/clang-format/share/clang/clang-format.py
+map <C-I> :py3f /usr/local/opt/clang-format/share/clang/clang-format.py<CR>
+imap <C-I> <ESC>:py3f /usr/local/opt/clang-format/share/clang/clang-format.py<CR>i
 """"
